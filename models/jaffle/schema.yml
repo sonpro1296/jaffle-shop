@@ -1,0 +1,64 @@
+version: 2
+
+models:
+    - name: fct_order
+      description: "Fact table for orders"
+      columns:
+          - name: id
+            description: "id of order"
+            tests:
+                - unique
+                - not_null
+          - name: credit_card_amount
+            description: "money paid by credit card"
+            tests:
+                - not_null
+          - name: bank_transfer_amount
+            description: "money paid by bank transfer"
+            tests:
+                - not_null
+          - name: coupon_amount
+            description: "money reduced by coupon"
+            tests:
+                - not_null
+          - name: gift_card_amount
+            description: "money reduced by gift card"
+            tests:
+                - not_null
+          - name: date
+            description: "order date"
+            tests:
+                - not_null
+
+          - name: customer_id
+            description: "customer who pay for the order"
+            tests:
+                - not_null
+                - relationships:              
+                    to: ref('dim_customer')              
+                    field: id
+
+    - name: dim_customer
+      description: "Dimension table for customers"
+      columns:
+          - name: id
+            description: "id of customer"
+            tests:
+                - unique
+                - not_null
+          - name: name
+            description: "name of customer"
+            tests:
+                - not_null
+          - name: first_order_date
+            description: "date of first order"
+          - name: last_order_date
+            description: "date of last order"
+
+          - name: avg_order_amount
+            description: "average amount of money spent on non-return orders"
+            tests:
+                - not_null
+        
+           
+    
